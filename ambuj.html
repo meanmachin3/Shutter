@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <script src="js/jquery.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script type="text/javascript">
+	
+	var upArrowImage="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+Cjxzdmcgd2lkdGg9IjI2cHgiIGhlaWdodD0iMjZweCIgdmlld0JveD0iMCAwIDI2IDI2IiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgPHBhdGggZD0iTTEyLjUsMyBMNCwxNSBMMTAuMjgwMjg1NywxNSBMMTAuMjgwMjg1NywyMi41IEwxNC43MTk3MTQzLDIyLjUgTDE0LjcxOTcxNDMsMTUgTDIxLDE1IEwxMi41LDMgTDEyLjUsMyBaIiBmaWxsPSIjM0Q5NDAwIj48L3BhdGg+Cjwvc3ZnPg==";
+	
+	var downArrowImage="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+Cjxzdmcgd2lkdGg9IjI2cHgiIGhlaWdodD0iMjZweCIgdmlld0JveD0iMCAwIDI2IDI2IiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgPHBhdGggZD0iTTEyLjUsMyBMNCwxNSBMMTAuMjgwMjg1NywxNSBMMTAuMjgwMjg1NywyMi41IEwxNC43MTk3MTQzLDIyLjUgTDE0LjcxOTcxNDMsMTUgTDIxLDE1IEwxMi41LDMgTDEyLjUsMyBaIiBmaWxsPSIjREQ0QjM5IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxMi41MDAwMDAsIDEzLjAwMDAwMCkgcm90YXRlKC0xODAuMDAwMDAwKSB0cmFuc2xhdGUoLTEyLjUwMDAwMCwgLTEzLjAwMDAwMCkgIj48L3BhdGg+Cjwvc3ZnPg==";
+	
+	
+	
+	var navBarFields={
+						"Banks":["banks",["PNB","SBI","UNION BANK OF INDIA","AXIS BANK","ICICI","HDFC BANK","INDUSIND BANK","KOTAK MAHINDRA BANK","YES BANK"]],
+						"Auto":["auto",["ASHOK LEYLAND","EICHER MOTORS",/*"SML ISUZU LTD","TATA MOTORS DVR",*/"BAJAJ AUTO","FORCE MOTORS","HERO MOTO CORP","MARUTI SUZUKI"]],
+						"Medical":["medical",[/*"AUROBINDO PHARMA",*/"MARKSANS PHARMA",/*"GLENMARK PHARMA",*/"SUVEN LIFE SCIENCES LTD","DR REDDYS LABORATORIES","CIPLA","SUN PHARMA","LUPIN"]],
+						"Tyres":["tyres",["TVS SRICHAKRA LIMITED","CEATLTD","APOLLO TYRES","JK TYRE AND INDUSTRIES","MRF LIMITED"]],
+						"Others":["others",["RELIANCE POWER","NESTLE INDIA LIMITED","BRITANNIA","LIC HOUSING FINANCE","HOUSING DEVELOPMENT AND INFRASTRUCTURE",/*"RELIANCE INFRA","SPICE JET","JET AIRWAYS",*/"DISH TV INDIA LIMITED","SREI INFRASTRUCTURE"]],
+						"IT":["it",["INFOSYS","TCS","TECH MAHINDRA"]],
+						"Research":["research",["IDFC","JAIN IRRIGATION","JAMNA AUTO","TATA GLOBAL BEVERAGES","GRANULES INDIA","KEI INDUSTRIES","BAJAJ HINDUSTHAN SUGAR","JAYPEE INFRATECH LIMITED","TRIVENI ENGINEERING AND INDUSTRIES LTD","TRIDENT","SAWACA BUSINESS"]],
+						"TODAY":["today",["AUROBINDO PHARMA","GLENMARK PHARMA",/*"APOLLO TYRES","TVS SRICHAKRA LIMITED","CEATLTD",*/"SPICE JET","JET AIRWAYS","INTERGLOBE AVIATION","RELIANCE INFRA","DWARIKESH SUGAR"]]
+	};
+	$(document).ready(function(){
+	 
+	var count=0;
+	var password="ambuj123";
+	for(key in navBarFields){
+	value0=navBarFields[key][0];
+	value1=navBarFields[key][1];
+		if(count==0){
+			$("#mainNavBar").append(
+				"<li class=\"active\">"+
+					"<a data-toggle=\"tab\" href=\"#"+value0+"\" >"+key+"  "+
+						"<span class=\"badge\">"+value1.length+"</span>"+
+					"</a>"+
+				"</li>");
+				
+			$("#mainNavBarContent").append(
+				"<div id="+value0+" class=\"tab-pane fade in active\" >"+
+					"<h3>"+key+"</h3>"+
+					"<table class=\"table table-striped\" style=\"table-layout:fixed;\">"+
+						"<thead>"+
+							"<th class=\"col-md-3\">Name</th>"+
+							"<th class=\"col-md-2\"><button type=\"button\" class=\"btn btn-info btn-sm refreshAllButton\" id="+key.replace(/ /g,"")+"RefreshButton>"+
+								"<span class=\"glyphicon glyphicon-refresh\"> Refresh All </button>"+
+							"</th>"+
+							"<th class=\"col-md-2\">Price</th>"+
+							"<th class=\"col-md-1\"></th>"+
+							"<th class=\"col-md-4\"></th>"+
+						"</thead>"+
+						"<tbody id="+value0+"Body></tbody>"+
+					"</table>"+
+				"</div>");
+			
+			for(value in value1){
+				$("#"+value0+"Body").append(
+				"<tr>"+
+				
+					"<td id="+value1[value].replace(/ /g,"")+"Div >"+value1[value]+"</td>"+
+					
+					"<td>"+
+						"<a href=\"https://www.google.com/search?q="+value1[value]+" SHARE PRICE\" target=\"_blank\" class=\"btn btn-info btn-sm\" role=\"button\" id="+value1[value].replace(/ /g,"")+"Button><span class=\"glyphicon glyphicon-search\"> Search Google</a>"+
+					"</td>"+
+					
+					"<td>"+
+						"<div id="+value1[value].replace(/ /g,"")+"Load style=\"display:none;\">"+
+							"<img src=\"images/load.gif\">"+
+							"</img>"+
+						"</div>"+
+						"<div id="+value1[value].replace(/ /g,"")+"Temp style=\"display:none;\">"+
+						"</div>"+
+					"</td>"+
+					
+					"<td>"+
+						"<div class=\"btn btn-info\" id="+value1[value].replace(/ /g,"")+"Refresh  style=\" border-radius: 29px;height: 29px;width: 29px;\"onclick=\"refreshStats('"+value1[value]+"','"+value1[value].replace(/ /g,"")+"');\">"+
+						"<i class=\"glyphicon glyphicon-refresh\" style=\"right: 5px;top: 0px;\"></i>"+
+						"</div>"+
+					"</td>"+
+					"<td>"+
+						"<a href=\"#\" class=\"btn btn-info btn-sm graphButton\" role=\"button\" id="
+						+value1[value].replace(/ /g,"")+"GraphButton>"+
+							"<span class=\"glyphicon glyphicon-grain\"> Show Graph"+
+						"</a>"+
+						"<div id="+value1[value].replace(/ /g,"")+"GraphDiv style=\"display:none;\">"+
+						"</div>"+
+					"</td>"+
+				"</tr>");
+				
+				ajaxCall(value1[value],value1[value].replace(/ /g,""));
+				$("#"+value1[value].replace(/ /g,"")+"Load").show();
+				$("#"+value1[value].replace(/ /g,"")+"Temp").hide();
+			}
+		}
+		else{
+			$("#mainNavBar").append(
+				"<li>"+
+					"<a data-toggle=\"tab\" href=\"#"+value0+"\">"+key+"  "+
+						"<span class=\"badge\">"+value1.length+"</span>"+
+					"</a>"+
+				"</li>");
+			$("#mainNavBarContent").append(
+			
+				"<div id="+value0+" class=\"tab-pane fade\" >"+
+					"<h3>"+key+"</h3>"+
+					"<table class=\"table table-striped\" style=\"table-layout:fixed;\">"+
+						"<thead>"+
+							"<th class=\"col-md-3\">Name</th>"+
+							"<th class=\"col-md-2\"><button type=\"button\" class=\"btn btn-info btn-sm refreshAllButton\" id="+key.replace(/ /g,"")+"RefreshButton><span class=\"glyphicon glyphicon-refresh\"> Refresh All </button></th>"+
+							"<th class=\"col-md-2\">Price</th>"+
+							"<th class=\"col-md-1\"></th>"+
+							"<th class=\"col-md-4\"></th>"+
+						"</thead>"+
+						"<tbody id="+value0+"Body></tbody>"+
+					"</table>"+
+				"</div>");
+			for(value in value1){
+				$("#"+value0+"Body").append(
+				
+				"<tr>"+
+					"<td id="+value1[value].replace(/ /g,"")+"Div >"+value1[value]+"</td>"+
+					
+					"<td>"+
+						"<a href=\"https://www.google.com/search?q="+value1[value]+" SHARE PRICE\" target=\"_blank\" class=\"btn btn-info btn-sm\" role=\"button\" id="+value1[value].replace(/ /g,"")+"Button>"+
+						"<span class=\"glyphicon glyphicon-search\"> Search Google"+
+						"</a>"+
+					"</td>"+
+					
+					"<td>"+
+						"<div id="+value1[value].replace(/ /g,"")+"Load style=\"display:none;\">"+
+							"<img src=\"images/load.gif\"></img>"+
+						"</div>"+
+						"<div id="+value1[value].replace(/ /g,"")+"Temp style=\"display:none;\"></div>"+
+					"</td>"+
+					
+					"<td>"+
+						"<div class=\"btn btn-info\" id="+value1[value].replace(/ /g,"")+"Refresh style=\" border-radius: 29px;height: 29px;width: 29px;\" onclick=\"refreshStats('"+value1[value]+"','"+value1[value].replace(/ /g,"")+"');\">"+
+							"<i class=\"glyphicon glyphicon-refresh\"  style=\"right: 5px;top: 0px;\"></i>"+
+						"</div>"+
+					"</td>"+
+					
+					"<td>"+
+						"<a href=\"#\" class=\"btn btn-info btn-sm graphButton\" role=\"button\" id="
+						+value1[value].replace(/ /g,"")+"GraphButton>"+
+							"<span class=\"glyphicon glyphicon-grain\">Show Graph"+
+						"</a>"+
+						"<div id="+value1[value].replace(/ /g,"")+"GraphDiv style=\"display:none;\">"+
+						"</div>"+
+					"</td>"+
+				"</tr>");
+			
+				ajaxCall(value1[value],value1[value].replace(/ /g,""));
+				$("#"+value1[value].replace(/ /g,"")+"Load").show();
+				$("#"+value1[value].replace(/ /g,"")+"Temp").hide();
+			}
+		}
+	
+	count++;
+	}
+	 $(".refreshAllButton").click(function(){
+		
+		//alert(this.id);
+		var loopValues= navBarFields[this.id.split("RefreshButton")[0]][1];
+		//alert(loopValues.length);
+		for(x=0; x<loopValues.length; x++){
+			var name=loopValues[x].replace(/ /g,"");
+			var text=$("#"+name+"Div").text();
+			$("#"+name+"Load").show();
+			$("#"+name+"Temp").hide();
+			//alert(text);
+			ajaxCall(text,name);
+			//$("#"+loopValues[x].replace(/ /g,"")+"Button").trigger('click');
+		}
+	 });
+	 
+	 $(".graphButton").click(function(){
+		
+		//alert(this.id.split("GraphButton")[0]);
+		$("#"+this.id.split("GraphButton")[0]+"GraphDiv").show();
+	 });
+	 
+	 $("#modalOK").click(function(){
+		
+		if($("#modalInputField").val()==password){
+		$("#modalInputField").val("");
+		$("#shutterImage").slideToggle(2000);
+		if($("#shutterDownUp").text()=="shutter down"){
+			$("#shutterDownUp").text("shutter up");
+			
+		}
+		else{
+			$("#modalInputField").val("");
+			$("#shutterDownUp").text("shutter down");
+		}}
+		else{
+			$("#modalInputField").val("");
+		}
+		//$("#mainNavBar").slideToggle();
+		//$("#mainNavBarContent").slideToggle();
+		// prompt('Please Enter Your Password',' ');
+		
+		//alert();
+	 });
+	 
+	});
+	 
+	 function ajaxCall(text,name){//   text= KOTAK MAHINDRA BANK name=KOTAKMAHINDRABANK
+	 //alert();
+		$.ajax({url: 'http://finance.google.com/finance/info?client=ig&q=NSE:'+text, success: function(data){
+			data = data.replace("//","");
+			var stockInfo = JSON.parse(data)[0];
+			var priceValue=stockInfo.l;
+			var differencePercent=stockInfo.cp;
+			var difference=stockInfo.c;
+				//$("#"+name+"Temp").hide().empty().append(result);
+				//$("#"+name+"GraphDiv").hide().empty().append(result);
+				
+				//var parentDiv=$("#"+name+"Temp #ires ._p2 div");
+				//var colorClass=$("#"+name+"Temp #ires ._p2 div").children()[1].classList[2];
+				//var arrowImage="";
+				
+				//if(colorClass=="vk_fin_up"){
+				//	arrowImage="<img src="+upArrowImage+">";
+				//}
+				//else if(colorClass=="vk_fin_dn"){
+				//	arrowImage="<img src="+downArrowImage+">";
+				//}
+				//var valueDiv=$("#"+name+"Temp #ires ._p2 div span");
+				//var priceValue=valueDiv[0].dataset.value;
+				//var difference=valueDiv[1].children[1].children[0].innerHTML;
+				//var differencePercent=valueDiv[1].children[1].children[1].innerHTML;
+				//var graph=$("#"+name+"Temp .vk_c");
+				//$("#"+name+"GraphDiv").append(graph);
+				/*$("#"+name+"GraphDiv #sfcnt").remove();
+				$("#"+name+"GraphDiv #resultStats").remove();
+				$("#"+name+"GraphDiv .srg").remove();
+				$("#"+name+"GraphDiv #foot").remove();
+				$("#"+name+"GraphDiv #fbar").remove();
+				$("#"+name+"GraphDiv #brs").remove();
+				$("#"+name+"GraphDiv #hdtbSum").remove();
+				$("#"+name+"GraphDiv #rhs").remove();
+				$("#"+name+"GraphDiv #searchform").remove();*/
+
+				//$("#"+name+"Temp").empty();
+				
+				
+				$("#"+name+"Load").hide();
+				
+				$("#"+name+"Temp").html(priceValue).append(arrowImage).append(difference).append(differencePercent).show();
+				
+        },
+		error:function(error){
+				$("#"+name+"Load").hide();
+				$("#"+name+"Temp").html("Connection Error");
+				$("#"+name+"Temp").show();
+				}});
+	 
+	 }
+	
+	
+	function refreshStats(text,name){//   text= KOTAK MAHINDRA BANK name=KOTAKMAHINDRABANK
+	
+		ajaxCall(text,name);
+				$("#"+name+"Load").show();
+				$("#"+name+"Temp").hide();
+	 
+	 }
+
+function startTime() {
+    var today=new Date();
+    var h=today.getHours();
+    var m=today.getMinutes();
+    var s=today.getSeconds();
+    m = checkTime(m);
+    s = checkTime(s);
+    document.getElementById('txt').innerHTML = "    "+h+":"+m+":"+s;
+	if(h>15||(h==15&&m>30)){
+		if($("#shutterDownUp").text()=="shutter down"){
+			$("#shutterDownUp").text("shutter up");
+			$("#shutterImage").slideDown(2000);
+			//alert("dukan bannd. Good bye!!");
+			
+		}
+	//alert();
+	}
+    var t = setTimeout(function(){startTime()},500);
+	
+	
+}
+
+function checkTime(i) {
+    if (i<10) {i = "0" + i};  // add zero in front of numbers < 10
+    return i;
+}
+
+  </script>
+</head>
+<!--<body onload="startTime()">-->
+<body>
+<div class="container-fluid">
+<div class="well" style="margin-top: 17px;">
+	<h1 style="display: inline-block;">MERI DUKAAN !!!</h1>
+	
+	<div style="display: inline-block;float:right">
+		<div id="txt" align="center" style="border:solid"></div>
+		<button id="shutterDownUp" class="btn btn-info btn-sm" style="display: inline-block;" data-toggle="modal" data-target="#myModal">shutter down</button>
+	</div>
+</div>
+
+
+ 
+  <!--<blockquote>
+		<p>Don't put all the eggs in same basket</p>
+		<footer>ambuj jain</footer>
+</blockquote>-->
+<div>
+	<img  src="images/images.jpg" style="display:none; height: 84%;width: 98%;z-index: 10;
+    position: absolute;" id="shutterImage" ></img>
+	<ul id="mainNavBar" class="nav nav-tabs nav-justified" >
+		<!--<li class="active"> <a data-toggle="tab" href="#banks"> Banks  <span class="badge">7</span></a></li>
+		<li > <a data-toggle="tab" href="#auto"> Auto</a></li>
+		<li > <a data-toggle="tab" href="#medical"> Medical</a></li>
+		<li > <a data-toggle="tab" href="#infra"> Infrastructure</a></li>-->
+	</ul>
+	
+	<div id="mainNavBarContent" class="tab-content">
+	</div>
+
+</div>	
+
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header" style="background-color: #5cb85c;">
+          <h4 class="modal-title" style="color: white;">Enter Password to close/open shop...</h4>
+        </div>
+        <div class="modal-body">
+          Enter Your Password:    <input type="password" id="modalInputField" autofocus></input>
+		  <button id="modalOK" type="button" class="btn btn-success" data-dismiss="modal"><span class="glyphicon glyphicon-ok"></span> OK</button>
+		  <button id="modalCancel" type="button" class="btn btn-danger" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+        </div>
+        <!--<div class="modal-footer">
+          
+        </div>-->
+      </div>
+      
+    </div>
+  </div>
+</div>
+</div>
+</div>
+  <!---->
+
+</body>
+</html>
